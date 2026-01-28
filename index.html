@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProBet Sports - Place Your Bet</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Disclaimer Modal (blocks page until accepted) -->
+    <div id="disclaimerModal" class="disclaimer-modal active">
+      <div class="disclaimer-content">
+        <div class="disclaimer-icon">⚠️</div>
+        <h2>Important Disclaimer</h2>
+        <div class="disclaimer-body">
+          <p>
+            <strong
+              >This website is for testing and demonstration purposes
+              only.</strong
+            >
+          </p>
+
+          <p>Please be aware:</p>
+          <ul>
+            <li>
+              This is <strong>NOT</strong> a real betting or gambling platform
+            </li>
+            <li>No actual money or bets are involved</li>
+            <li>
+              All data entered is for testing automation and form validation
+              only
+            </li>
+            <li>
+              This site is designed for software testing, quality assurance, and
+              educational purposes
+            </li>
+            <li>
+              ProBet Sports is a fictitious company created solely for this
+              demonstration
+            </li>
+          </ul>
+
+          <p class="disclaimer-warning">
+            By clicking "I Understand" below, you acknowledge that this is a
+            test environment and not a real betting service.
+          </p>
+        </div>
+        <button class="btn-disclaimer-accept" id="acceptDisclaimer">
+          I Understand - Continue to Test Site
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="logo-section">
+        <h1>⚽ ProBet Sports</h1>
+        <p class="tagline">Your Premier Sports Betting Platform</p>
+      </div>
+      <div
+        id="apiNotification"
+        class="api-notification hidden"
+        data-testid="api-notification"
+      ></div>
+      <div
+        id="formAutoSaveStatus"
+        class="form-auto-save-status"
+        data-testid="form-auto-save-status"
+      ></div>
+      <form id="registrationForm" data-testid="registration-form">
+        <!-- Account Information -->
+        <h2 class="section-title">
+          <span class="section-icon">👤</span>
+          Account Information
+        </h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              data-testid="first-name-input"
+              required
+              placeholder="Enter first name"
+            />
+            <span class="error-message" data-testid="first-name-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              data-testid="last-name-input"
+              required
+              placeholder="Enter last name"
+            />
+            <span class="error-message" data-testid="last-name-error"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            data-testid="email-input"
+            required
+            placeholder="your.email@example.com"
+          />
+          <span class="error-message" data-testid="email-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            data-testid="password-input"
+            required
+            placeholder="Minimum 8 characters"
+          />
+          <span class="error-message" data-testid="password-error"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="country">Country *</label>
+            <select
+              id="country"
+              name="country"
+              data-testid="country-select"
+              required
+            >
+              <option value="">Select your country</option>
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+              <option value="de">Germany</option>
+              <option value="es">Spain</option>
+              <option value="it">Italy</option>
+              <option value="br">Brazil</option>
+            </select>
+            <span class="error-message" data-testid="country-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="age">Date of Birth *</label>
+            <input
+              type="date"
+              id="age"
+              name="age"
+              data-testid="age-input"
+              required
+            />
+            <span class="error-message" data-testid="age-error"></span>
+          </div>
+        </div>
+
+        <!-- Bet Placement Section -->
+        <h2 class="section-title">
+          <span class="section-icon">🎯</span>
+          Place Your Bet
+        </h2>
+
+        <div class="form-group">
+          <label for="sport">Sport *</label>
+          <select id="sport" name="sport" data-testid="sport-select" required>
+            <option value="">Select a sport</option>
+            <option value="football">Football (Soccer)</option>
+            <option value="basketball">Basketball</option>
+            <option value="baseball">Baseball</option>
+            <option value="hockey">Ice Hockey</option>
+            <option value="tennis">Tennis</option>
+            <option value="boxing">Boxing/MMA</option>
+          </select>
+          <span class="error-message" data-testid="sport-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="league">League/Competition *</label>
+          <div class="select-wrapper">
+            <select
+              id="league"
+              name="league"
+              data-testid="league-select"
+              required
+              disabled
+            >
+              <option value="">Select a sport first</option>
+            </select>
+            <div
+              class="loader loader-sm hidden"
+              id="leagueLoader"
+              data-testid="league-loader"
+            ></div>
+          </div>
+          <span class="error-message" data-testid="league-error"></span>
+          <span class="api-error-message" data-testid="league-api-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="matchup">Select Matchup *</label>
+          <div class="select-wrapper">
+            <select
+              id="matchup"
+              name="matchup"
+              data-testid="matchup-select"
+              required
+              disabled
+            >
+              <option value="">Select a league first</option>
+            </select>
+            <div
+              class="loader loader-sm hidden"
+              id="matchupLoader"
+              data-testid="matchup-loader"
+            ></div>
+          </div>
+          <span class="error-message" data-testid="matchup-error"></span>
+          <span
+            class="api-error-message"
+            data-testid="matchup-api-error"
+          ></span>
+        </div>
+        <div class="form-group">
+          <label>Bet Type *</label>
+          <div class="radio-group">
+            <label class="bet-type-label">
+              <input
+                type="radio"
+                name="betType"
+                value="moneyline"
+                data-testid="bet-moneyline"
+              />
+              <span class="bet-option">
+                <strong>Moneyline</strong>
+                <small>Pick the winner</small>
+              </span>
+            </label>
+            <label class="bet-type-label">
+              <input
+                type="radio"
+                name="betType"
+                value="spread"
+                data-testid="bet-spread"
+              />
+              <span class="bet-option">
+                <strong>Point Spread</strong>
+                <small>Win by margin</small>
+              </span>
+            </label>
+            <label class="bet-type-label">
+              <input
+                type="radio"
+                name="betType"
+                value="over-under"
+                data-testid="bet-overunder"
+              />
+              <span class="bet-option">
+                <strong>Over/Under</strong>
+                <small>Total points scored</small>
+              </span>
+            </label>
+            <label class="bet-type-label">
+              <input
+                type="radio"
+                name="betType"
+                value="parlay"
+                data-testid="bet-parlay"
+              />
+              <span class="bet-option">
+                <strong>Parlay</strong>
+                <small>Multiple bets combined</small>
+              </span>
+            </label>
+          </div>
+          <span class="error-message" data-testid="bettype-error"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="betAmount">Bet Amount ($) *</label>
+            <input
+              type="number"
+              id="betAmount"
+              name="betAmount"
+              data-testid="bet-amount-input"
+              required
+              min="1"
+              step="0.01"
+              placeholder="0.00"
+            />
+            <span class="error-message" data-testid="bet-amount-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="odds">Odds *</label>
+            <select id="odds" name="odds" data-testid="odds-select" required>
+              <option value="">Select odds</option>
+              <option value="-200">-200 (Favorite)</option>
+              <option value="-150">-150</option>
+              <option value="-110">-110</option>
+              <option value="+110">+110</option>
+              <option value="+150">+150</option>
+              <option value="+200">+200 (Underdog)</option>
+              <option value="+300">+300</option>
+              <option value="+500">+500</option>
+            </select>
+            <span class="error-message" data-testid="odds-error"></span>
+          </div>
+        </div>
+
+        <div class="potential-payout" data-testid="potential-payout">
+          <span>Potential Payout:</span>
+          <span class="payout-amount" data-testid="payout-amount">$0.00</span>
+        </div>
+
+        <!-- Preferences -->
+        <h2 class="section-title">
+          <span class="section-icon">⭐</span>
+          Betting Preferences
+        </h2>
+
+        <div class="form-group">
+          <label>Favorite Sports (Optional)</label>
+          <div class="checkbox-group sports-checkboxes">
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="football"
+                data-testid="fav-football"
+              />
+              ⚽ Football
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="basketball"
+                data-testid="fav-basketball"
+              />
+              🏀 Basketball
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="baseball"
+                data-testid="fav-baseball"
+              />
+              ⚾ Baseball
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="hockey"
+                data-testid="fav-hockey"
+              />
+              🏒 Hockey
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="tennis"
+                data-testid="fav-tennis"
+              />
+              🎾 Tennis
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="favoriteSports"
+                value="boxing"
+                data-testid="fav-boxing"
+              />
+              🥊 Boxing/MMA
+            </label>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="form-group terms-section">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              id="ageVerification"
+              name="ageVerification"
+              data-testid="age-verification-checkbox"
+              required
+            />
+            I confirm that I am 18 years or older *
+          </label>
+          <span
+            class="error-message"
+            data-testid="age-verification-error"
+          ></span>
+        </div>
+
+        <div class="form-group terms-section">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              data-testid="terms-checkbox"
+              required
+            />
+            I agree to the
+            <a href="#" class="terms-link" data-modal="terms"
+              >Terms & Conditions</a
+            >
+            *
+          </label>
+          <span class="error-message" data-testid="terms-error"></span>
+        </div>
+
+        <div class="form-group terms-section">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              id="gaming"
+              name="gaming"
+              data-testid="gaming-checkbox"
+              required
+            />
+            I agree to the
+            <a href="#" class="terms-link" data-modal="gaming"
+              >Responsible Gaming Policy</a
+            >
+            *
+          </label>
+          <span class="error-message" data-testid="gaming-error"></span>
+        </div>
+
+        <div class="form-group terms-section">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              id="newsletter"
+              name="newsletter"
+              data-testid="newsletter-checkbox"
+            />
+            Send me promotional offers and betting tips
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" data-testid="submit-button">
+            🎲 Place Bet
+          </button>
+          <button type="reset" class="btn-reset" data-testid="reset-button">
+            Clear Form
+          </button>
+        </div>
+      </form>
+
+      <!-- Success Message -->
+      <div
+        id="successMessage"
+        class="success-message"
+        data-testid="success-message"
+        style="display: none"
+      >
+        <div class="success-icon">✓</div>
+        <h2>Bet Placed Successfully!</h2>
+        <p class="success-subtitle">Your wager has been confirmed</p>
+        <div
+          id="submittedData"
+          class="bet-summary"
+          data-testid="submitted-data"
+        ></div>
+        <div class="success-actions">
+          <button class="btn-view-bets" id="placeAnotherBetBtn">
+            Place Another Bet
+          </button>
+        </div>
+      </div>
+
+      <!-- Form Recovery Notification -->
+      <div
+        id="formRecoveryNotification"
+        class="form-recovery-notification hidden"
+        data-testid="form-recovery-notification"
+      >
+        <p>
+          💾 <strong>Recovered unsaved form data.</strong> Your previous entries
+          have been restored.
+        </p>
+        <button type="button" id="dismissRecovery" class="btn-dismiss">
+          Dismiss
+        </button>
+      </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" data-close="terms">&times;</span>
+        <h2>Terms & Conditions</h2>
+        <div class="modal-body">
+          <p><strong>Effective Date:</strong> January 1, 2026</p>
+
+          <h3>1. Acceptance of Terms</h3>
+          <p>
+            By accessing and using ProBet Sports platform, you agree to be bound
+            by these Terms and Conditions. If you do not agree to these terms,
+            please do not use our services.
+          </p>
+
+          <h3>2. Eligibility</h3>
+          <p>
+            You must be at least 18 years of age to use this service. By
+            registering, you confirm that all information provided is accurate
+            and truthful. We reserve the right to verify your age and identity
+            at any time.
+          </p>
+
+          <h3>3. Account Registration</h3>
+          <p>
+            You are responsible for maintaining the confidentiality of your
+            account credentials. You agree to notify us immediately of any
+            unauthorized use of your account. One person may only register one
+            account.
+          </p>
+
+          <h3>4. Betting Rules</h3>
+          <p>
+            All bets are final once confirmed. We reserve the right to void bets
+            in cases of obvious error, fraud, or technical malfunction. Minimum
+            and maximum bet limits apply and may vary by sport and event.
+          </p>
+
+          <h3>5. Deposits and Withdrawals</h3>
+          <p>
+            All financial transactions must comply with applicable laws. We
+            reserve the right to request additional verification before
+            processing withdrawals. Processing times may vary depending on the
+            payment method used.
+          </p>
+
+          <h3>6. Responsible Gaming</h3>
+          <p>
+            We are committed to promoting responsible gaming. Users may set
+            deposit limits, time limits, or self-exclude at any time through
+            their account settings. Please refer to our Responsible Gaming
+            Policy for more information.
+          </p>
+
+          <h3>7. Prohibited Activities</h3>
+          <p>
+            Users may not engage in fraud, collusion, money laundering, or any
+            other illegal activities. We employ sophisticated monitoring systems
+            and will report suspicious activity to relevant authorities.
+          </p>
+
+          <h3>8. Intellectual Property</h3>
+          <p>
+            All content on this platform, including logos, text, graphics, and
+            software, is the property of ProBet Sports and protected by
+            copyright laws.
+          </p>
+
+          <h3>9. Limitation of Liability</h3>
+          <p>
+            ProBet Sports is not liable for any indirect, incidental, or
+            consequential damages arising from your use of our services. We do
+            not guarantee uninterrupted or error-free service.
+          </p>
+
+          <h3>10. Changes to Terms</h3>
+          <p>
+            We reserve the right to modify these terms at any time. Continued
+            use of our services after changes constitutes acceptance of the
+            modified terms.
+          </p>
+
+          <h3>11. Governing Law</h3>
+          <p>
+            These terms are governed by the laws of the jurisdiction in which
+            ProBet Sports is licensed. Any disputes shall be resolved through
+            binding arbitration.
+          </p>
+
+          <h3>12. Contact Information</h3>
+          <p>
+            For questions about these terms, please contact us at
+            support@probetsports.com
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsible Gaming Policy Modal -->
+    <div id="gamingModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" data-close="gaming">&times;</span>
+        <h2>Responsible Gaming Policy</h2>
+        <div class="modal-body">
+          <p><strong>Our Commitment</strong></p>
+          <p>
+            ProBet Sports is committed to promoting responsible gaming practices
+            and providing a safe, enjoyable betting environment for all users.
+          </p>
+
+          <h3>1. Gaming Should Be Entertainment</h3>
+          <p>
+            Betting should be viewed as a form of entertainment, not a way to
+            make money or solve financial problems. Only bet what you can afford
+            to lose.
+          </p>
+
+          <h3>2. Know Your Limits</h3>
+          <p>
+            Set clear limits on how much time and money you spend on betting.
+            Never chase losses or bet more than you can afford. Take regular
+            breaks from betting activities.
+          </p>
+
+          <h3>3. Self-Assessment</h3>
+          <p>Ask yourself these questions regularly:</p>
+          <ul>
+            <li>Do I bet more than I can afford to lose?</li>
+            <li>Do I feel the need to bet with increasing amounts of money?</li>
+            <li>Have I tried to win back losses by betting more?</li>
+            <li>Have I borrowed money or sold possessions to bet?</li>
+            <li>Has betting caused problems in my relationships or work?</li>
+          </ul>
+          <p>
+            If you answered yes to any of these questions, you may have a
+            gambling problem.
+          </p>
+
+          <h3>4. Tools and Controls</h3>
+          <p>We provide the following tools to help you maintain control:</p>
+          <ul>
+            <li>
+              <strong>Deposit Limits:</strong> Set daily, weekly, or monthly
+              deposit limits
+            </li>
+            <li>
+              <strong>Loss Limits:</strong> Set maximum loss amounts over
+              specific periods
+            </li>
+            <li>
+              <strong>Session Time Limits:</strong> Set reminders for how long
+              you've been betting
+            </li>
+            <li>
+              <strong>Reality Checks:</strong> Receive periodic notifications
+              about time and money spent
+            </li>
+            <li>
+              <strong>Self-Exclusion:</strong> Temporarily or permanently block
+              access to your account
+            </li>
+          </ul>
+
+          <h3>5. Age Verification</h3>
+          <p>
+            Underage gambling is strictly prohibited. We employ rigorous age
+            verification measures and will immediately close any accounts found
+            to be operated by minors.
+          </p>
+
+          <h3>6. Protection of Vulnerable Users</h3>
+          <p>
+            We actively monitor for signs of problem gambling and may reach out
+            to users showing concerning patterns. We may restrict or suspend
+            accounts if we believe a user is at risk.
+          </p>
+
+          <h3>7. Getting Help</h3>
+          <p>
+            If you or someone you know has a gambling problem, help is
+            available:
+          </p>
+          <ul>
+            <li>
+              <strong>National Problem Gambling Helpline:</strong>
+              1-800-522-4700 (24/7)
+            </li>
+            <li>
+              <strong>Gamblers Anonymous:</strong> www.gamblersanonymous.org
+            </li>
+            <li>
+              <strong>National Council on Problem Gambling:</strong>
+              www.ncpgambling.org
+            </li>
+          </ul>
+
+          <h3>8. Family and Friends</h3>
+          <p>
+            If you're concerned about someone's gambling, encourage them to seek
+            help. Consider using our account exclusion features if you share
+            finances with someone who may have a problem.
+          </p>
+
+          <h3>9. Financial Resources</h3>
+          <p>
+            Never gamble with money needed for essential expenses like rent,
+            bills, or food. Avoid gambling when under the influence of alcohol
+            or drugs, or when feeling depressed or upset.
+          </p>
+
+          <h3>10. Our Pledge</h3>
+          <p>ProBet Sports pledges to:</p>
+          <ul>
+            <li>Provide clear information about gambling risks</li>
+            <li>Make responsible gaming tools easily accessible</li>
+            <li>Train our staff to identify and assist at-risk users</li>
+            <li>Never target or exploit vulnerable individuals</li>
+            <li>Partner with problem gambling organizations</li>
+          </ul>
+
+          <p><strong>Remember:</strong> When the fun stops, stop.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="dist/form.js"></script>
+  </body>
+</html>
