@@ -63,62 +63,20 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
-    background-attachment: fixed;
-    background-size: 200% 200%;
+    background: #43e97b;
     min-height: 100vh;
     padding: var(--spacing-lg);
     overflow-x: hidden;
     max-width: 100vw;
     position: relative;
-    animation: gradientShift 15s ease infinite;
 }
 
-@keyframes gradientShift {
-    0% {
-        background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
-    }
-    25% {
-        background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary-light) 50%, var(--color-primary-hover) 100%);
-    }
-    50% {
-        background: linear-gradient(135deg, #244b2d 0%, var(--color-primary) 50%, #244b2d 100%);
-    }
-    75% {
-        background: linear-gradient(135deg, var(--color-primary-dark) 0%, #2a541a 50%, var(--color-primary-dark) 100%);
-    }
-    100% {
-        background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
-    }
-}
 
-body::before {
-    content: "⚽ 🏀 ⚾ 🏈 🎾 🏐 🏒 🥊 ⚽ 🏀 ⚾ 🏈";
-    position: fixed;
-    top: 10%;
-    left: -5%;
-    font-size: 80px;
-    opacity: 0.08;
-    white-space: nowrap;
-    pointer-events: none;
-    letter-spacing: 100px;
-    transform: rotate(-15deg);
-    z-index: 0;
-}
+/* Removed gradientShift animation for static green background */
 
-body::after {
-    content: "🎾 🏒 🥊 ⚽ 🏀 ⚾ 🏈 🎾 🏐 🏒";
-    position: fixed;
-    bottom: 15%;
-    right: -5%;
-    font-size: 70px;
-    opacity: 0.08;
-    white-space: nowrap;
-    pointer-events: none;
-    letter-spacing: 90px;
-    transform: rotate(15deg);
-    z-index: 0;
-}
+
+
+
 
 /* Disclaimer Modal Styles */
 .disclaimer-modal {
@@ -1327,17 +1285,13 @@ select:disabled {
     cursor: not-allowed;
     opacity: 0.6;
 }
-        margin-bottom: 20px;
-        left: 20px;
-        right: 20px;
-    }
 
+@media (max-width: 480px) {
     .form-recovery-notification {
         max-width: 85vw;
         left: 20px;
         right: auto;
     }
-
     .form-auto-save-status {
         bottom: 10px;
         right: 10px;
