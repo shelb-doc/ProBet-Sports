@@ -408,36 +408,24 @@
           <label class="checkbox-label">
             <input
               type="checkbox"
-              id="terms"
-              name="terms"
-              data-testid="terms-checkbox"
+              id="termsAndGaming"
+              name="termsAndGaming"
+              data-testid="terms-gaming-checkbox"
               required
             />
-            I agree to the
-            <a href="#" class="terms-link" data-modal="terms"
-              >Terms & Conditions</a
-            >
-            *
+            <span class="checkbox-text">
+              I agree to the
+              <a href="#" class="terms-link" data-modal="terms"
+                >Terms & Conditions</a
+              >
+              and the
+              <a href="#" class="terms-link" data-modal="gaming"
+                >Responsible Gaming Policy</a
+              >
+              *
+            </span>
           </label>
-          <span class="error-message" data-testid="terms-error"></span>
-        </div>
-
-        <div class="form-group terms-section">
-          <label class="checkbox-label">
-            <input
-              type="checkbox"
-              id="gaming"
-              name="gaming"
-              data-testid="gaming-checkbox"
-              required
-            />
-            I agree to the
-            <a href="#" class="terms-link" data-modal="gaming"
-              >Responsible Gaming Policy</a
-            >
-            *
-          </label>
-          <span class="error-message" data-testid="gaming-error"></span>
+          <span class="error-message" data-testid="terms-gaming-error"></span>
         </div>
 
         <div class="form-group terms-section">

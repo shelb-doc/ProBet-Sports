@@ -597,15 +597,26 @@ input[type="checkbox"] {
     font-weight: 500;
 }
 
+
 .checkbox-label {
-    display: flex;
-    align-items: center;
+    display: block;
     cursor: pointer;
     font-weight: normal;
+    line-height: 1.6;
+    padding-left: 0;
+    position: relative;
 }
 
 .checkbox-label input[type="checkbox"] {
     margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: 2px;
+}
+
+.checkbox-label .checkbox-text {
+    display: inline;
+    margin-left: 0.5em;
 }
 
 .terms-section {
@@ -1316,10 +1327,7 @@ select:disabled {
     cursor: not-allowed;
     opacity: 0.6;
 }
-
-@media (max-width: 768px) {
-    .api-notification {
-        max-width: 85vw;
+        margin-bottom: 20px;
         left: 20px;
         right: 20px;
     }
